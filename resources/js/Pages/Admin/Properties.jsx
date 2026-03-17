@@ -1,5 +1,5 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
-import { Head } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 import React from 'react'
 
 const Properties = () => {
@@ -13,10 +13,10 @@ const Properties = () => {
           <h1 className="text-2xl font-bold text-slate-800">Properties</h1>
           <p className="text-slate-500 text-sm mt-1">Manage your property listings</p>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+        <Link href={route("page.addProperty")} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
           Add Property
-        </button>
+        </Link>
       </div>
 
       {/* Filters */}

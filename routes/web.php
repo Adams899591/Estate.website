@@ -17,12 +17,15 @@ Route::inertia("estate", "Estate");
 
 Route::prefix("admin")->group(function(){
 
+// dashboard routes
 Route::get("dashboard",[DashboardController::class,"showDashboardPage"])->name("page.dashboard");
 
+// property routes
 Route::get("properties",[PropertiesController::class,"showPropertiesPage"])->name("page.properties");
-Route::get("addProperty",[PropertiesController::class,"AddPropertyPage"])->name("page.addProperty");
+Route::get("addProperty",[PropertiesController::class,"showAddPropertyPage"])->name("page.addProperty");
 
-Route::get("analytics",[AnalyticsController::class,"AnalyticsPage"])->name("page.analytics");
+// analytics routes
+Route::get("analytics",[AnalyticsController::class,"showAnalyticsPage"])->name("page.analytics");
 
 });
 

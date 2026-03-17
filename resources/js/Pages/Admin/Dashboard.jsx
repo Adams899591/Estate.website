@@ -1,4 +1,5 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
+import { Head } from '@inertiajs/react';
 import React from 'react'
 
 const Dashboard = () => {
@@ -14,6 +15,8 @@ const Dashboard = () => {
 
   return (
      <>
+        <Head title="Dashboard" />
+
             {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {stats.map((stat, index) => (
