@@ -54,13 +54,13 @@ const Properties = () => {
           <table className="w-full text-left text-sm text-slate-600">
             <thead className="bg-slate-50 text-slate-700 uppercase font-semibold">
               <tr>
-                <th className="px-6 py-4">Property</th>
-                <th className="px-6 py-4">Type</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4">Price</th>
-                <th className="px-6 py-4">Agent</th>
-                <th className="px-6 py-4">Date</th>
-                <th className="px-6 py-4 text-right">Actions</th>
+                <th className="px-6 py-4 whitespace-nowrap">Property</th>
+                <th className="px-6 py-4 whitespace-nowrap">Type</th>
+                <th className="px-6 py-4 whitespace-nowrap">Status</th>
+                <th className="px-6 py-4 whitespace-nowrap">Price</th>
+                <th className="px-6 py-4 whitespace-nowrap">Agent</th>
+                <th className="px-6 py-4 whitespace-nowrap">Date</th>
+                <th className="px-6 py-4 text-right whitespace-nowrap">Actions</th>
               </tr>
             </thead>
                     <tbody className="divide-y divide-slate-100 whitespace-nowrap">
@@ -83,7 +83,7 @@ const Properties = () => {
                     For Sale
                   </span>
                 </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$2,800,000</td>
+                <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">$2,800,000</td>
                 <td className="px-6 py-4">John Doe</td>
                 <td className="px-6 py-4 text-slate-500">2023-10-15</td>
                 <td className="px-6 py-4 text-right">
@@ -115,7 +115,7 @@ const Properties = () => {
                     For Rent
                   </span>
                 </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$25,000/mo</td>
+                <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">$25,000/mo</td>
                 <td className="px-6 py-4">Jane Smith</td>
                 <td className="px-6 py-4 text-slate-500">2023-10-14</td>
                 <td className="px-6 py-4 text-right">
@@ -147,7 +147,7 @@ const Properties = () => {
                     Pending
                   </span>
                 </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$4,200,000</td>
+                <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">$4,200,000</td>
                 <td className="px-6 py-4">Alice Johnson</td>
                 <td className="px-6 py-4 text-slate-500">2023-10-10</td>
                 <td className="px-6 py-4 text-right">
@@ -179,7 +179,7 @@ const Properties = () => {
                     Sold
                   </span>
                 </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$450,000</td>
+                <td className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">$450,000</td>
                 <td className="px-6 py-4">John Doe</td>
                 <td className="px-6 py-4 text-slate-500">2023-10-05</td>
                 <td className="px-6 py-4 text-right">
