@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render("Welcome");
+    return Inertia::render("Admin/Login");
 });
  
 
@@ -24,7 +24,8 @@ Route::controller(DevLuxPagesController::class)->prefix("DevLux")->group(functio
   Route::get("home", "showHomePage")->name("page.home");
   Route::get("properties", "showPropertiesPage")->name("page.properties");
   Route::get("aboutUs", "showAboutUsPage")->name("page.aboutUs");
-  Route::get("viewProperty", "showViewPropretyPage")->name("page.viewProperty");
+  Route::get("contactUs", "showContactUsPage")->name("page.contactUs");
+  Route::get("viewProperty", "showViewPropretyPage")->name("page.viewProperty"); // id later
 
 
 });

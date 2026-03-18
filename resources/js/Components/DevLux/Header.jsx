@@ -12,9 +12,9 @@ const Header = ({isMobileMenuOpen,setIsMobileMenuOpen}) => {
                 <nav className="hidden md:flex space-x-8">
                     <Link href={route("page.home")} className="text-slate-600 hover:text-blue-600 font-medium">Home</Link >
                     <Link  href={route("page.properties")} className="text-slate-600 hover:text-blue-600 font-medium">Properties</Link >
-                    <Link  href="#" className="text-slate-600 hover:text-blue-600 font-medium">Agents</Link >
+                    {/* <Link  href="#" className="text-slate-600 hover:text-blue-600 font-medium">Agents</Link > */}
                     <Link  href={route("page.aboutUs")} className="text-slate-600 hover:text-blue-600 font-medium">About Us</Link >
-                    <Link  href="#" className="text-slate-600 hover:text-blue-600 font-medium">Contact</Link >
+                    <Link  href={route("page.contactUs")} className="text-slate-600 hover:text-blue-600 font-medium">Contact</Link >
                 </nav>
                 <div className="hidden md:flex items-center space-x-4">
                     {/* <a href="#" className="text-slate-600 hover:text-blue-600 font-medium">Login</a> */}
@@ -37,9 +37,9 @@ const Header = ({isMobileMenuOpen,setIsMobileMenuOpen}) => {
                     <div className="flex flex-col px-6 py-4 space-y-4">
                         <Link  href={route("page.home")} className="text-slate-600 hover:text-blue-600 font-medium">Home</Link >
                         <Link  href={route("page.properties")} className="text-slate-600 hover:text-blue-600 font-medium">Properties</Link >
-                        <Link   className="text-slate-600 hover:text-blue-600 font-medium">Agents</Link >
-                        <Link  href={"page.aboutUs"} className="text-slate-600 hover:text-blue-600 font-medium">About Us</Link >
-                        <Link  href="#" className="text-slate-600 hover:text-blue-600 font-medium">Contact</Link >
+                        {/* <Link   className="text-slate-600 hover:text-blue-600 font-medium">Agents</Link > */}
+                        <Link  href={route("page.aboutUs")} className="text-slate-600 hover:text-blue-600 font-medium">About Us</Link >
+                        <Link  href={route("page.contactUs")} className="text-slate-600 hover:text-blue-600 font-medium">Contact</Link >
                         <div className="pt-4 flex flex-col space-y-3 border-t border-slate-100">
                              {/* <a href="#" className="text-slate-600 hover:text-blue-600 font-medium">Login</a> */}
                              {/* <a href="#" className="bg-blue-600 text-center text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Register</a> */}

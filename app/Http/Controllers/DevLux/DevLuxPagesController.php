@@ -23,6 +23,11 @@ class DevLuxPagesController extends Controller
         return Inertia::render("DevLux/AboutUs");
     }
 
+    //show Contact Us Page
+    public function showContactUsPage(){
+        return Inertia::render("DevLux/ContactUs");
+    }
+
     //show Property Page
     public function showViewPropretyPage(){
         return Inertia::render("DevLux/ViewProperty");
