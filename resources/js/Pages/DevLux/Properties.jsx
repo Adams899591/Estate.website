@@ -1,6 +1,6 @@
 import DevLuxGuestLayout from '@/Layouts/DevLux/DevLuxGuestLayout'
 import React from 'react'
-import { Head } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 
 const Properties = () => {
   return (
@@ -8,10 +8,11 @@ const Properties = () => {
         <Head title="Our Properties" />
 
         {/* Page Title & Hero Area */}
-        <div className="bg-gray-100 py-16">
-            <div className="container mx-auto px-4 text-center">
-                <h1 className="text-4xl font-bold text-gray-800 mb-4">Find Your Dream Home</h1>
-                <p className="text-gray-600 max-w-2xl mx-auto">
+        <div className="relative bg-gray-900 py-20 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')" }}>
+            <div className="absolute inset-0 bg-black opacity-60"></div>
+            <div className="relative container mx-auto px-4 text-center z-10">
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Find Your Dream Home</h1>
+                <p className="text-gray-200 text-lg max-w-2xl mx-auto">
                     Browse our exclusive list of properties. Whether you are buying, selling, or renting, we have the perfect match for you.
                 </p>
             </div>
@@ -19,29 +20,29 @@ const Properties = () => {
 
         {/* Search & Filter Section (Static) */}
         <div className="bg-white border-b sticky top-0 z-30 shadow-sm">
-            <div className="container mx-auto px-4 py-4">
-                <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="container mx-auto px-4 py-3 md:py-4">
+                <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-center justify-between">
                     <div className="w-full md:w-1/3">
                         <input 
                             type="text" 
                             placeholder="Search by location, city or zip..." 
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-3 py-2 md:px-4 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         />
                     </div>
-                    <div className="w-full md:w-auto flex gap-4">
-                        <select className="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <div className="w-full md:w-auto flex gap-2 md:gap-4">
+                        <select className="flex-1 md:flex-none px-3 py-2 md:px-4 text-sm md:text-base border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             <option>Property Type</option>
                             <option>House</option>
                             <option>Apartment</option>
                             <option>Condo</option>
                         </select>
-                        <select className="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <select className="flex-1 md:flex-none px-3 py-2 md:px-4 text-sm md:text-base border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                             <option>Price Range</option>
                             <option>$100k - $200k</option>
                             <option>$200k - $500k</option>
                             <option>$500k+</option>
                         </select>
-                        <button className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300">
+                        <button className="px-4 py-2 md:px-6 bg-blue-600 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-blue-700 transition duration-300">
                             Search
                         </button>
                     </div>
@@ -59,7 +60,7 @@ const Properties = () => {
                         <div className="relative h-64 overflow-hidden">
                             {/* Placeholder Image */}
                             <img 
-                                src="https://images.unsplash.com/photo-1600596542815-e32c2159940c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                                 alt="Modern Villa" 
                                 className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
                             />
@@ -79,6 +80,15 @@ const Properties = () => {
                                 <span className="flex items-center gap-1"><strong>5</strong> Beds</span>
                                 <span className="flex items-center gap-1"><strong>4</strong> Baths</span>
                                 <span className="flex items-center gap-1"><strong>4,500</strong> Sq Ft</span>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                    </svg>
+                                    View
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -108,6 +118,15 @@ const Properties = () => {
                                 <span className="flex items-center gap-1"><strong>2</strong> Baths</span>
                                 <span className="flex items-center gap-1"><strong>2,100</strong> Sq Ft</span>
                             </div>
+                            <div className="mt-4 flex justify-end">
+                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                    </svg>
+                                    View
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
@@ -135,6 +154,15 @@ const Properties = () => {
                                 <span className="flex items-center gap-1"><strong>4</strong> Beds</span>
                                 <span className="flex items-center gap-1"><strong>3</strong> Baths</span>
                                 <span className="flex items-center gap-1"><strong>2,800</strong> Sq Ft</span>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                    </svg>
+                                    View
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -164,6 +192,15 @@ const Properties = () => {
                                 <span className="flex items-center gap-1"><strong>3</strong> Baths</span>
                                 <span className="flex items-center gap-1"><strong>3,200</strong> Sq Ft</span>
                             </div>
+                            <div className="mt-4 flex justify-end">
+                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                    </svg>
+                                    View
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
@@ -192,6 +229,15 @@ const Properties = () => {
                                 <span className="flex items-center gap-1"><strong>2</strong> Baths</span>
                                 <span className="flex items-center gap-1"><strong>1,500</strong> Sq Ft</span>
                             </div>
+                            <div className="mt-4 flex justify-end">
+                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                    </svg>
+                                    View
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
@@ -219,6 +265,15 @@ const Properties = () => {
                                 <span className="flex items-center gap-1"><strong>6</strong> Beds</span>
                                 <span className="flex items-center gap-1"><strong>5</strong> Baths</span>
                                 <span className="flex items-center gap-1"><strong>5,200</strong> Sq Ft</span>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                    </svg>
+                                    View
+                                </Link>
                             </div>
                         </div>
                     </div>
