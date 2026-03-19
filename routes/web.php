@@ -40,7 +40,7 @@ Route::prefix("admin")->group(function(){
     Route::get("dashboard",[DashboardController::class,"showDashboardPage"])->name("page.dashboard");
 
     // property routes
-    Route::get("properties",[PropertiesController::class,"showPropertiesPage"])->name("page.properties");
+    Route::get("properties",[PropertiesController::class,"showPropertiesPage"])->name("page.admin.properties");
     Route::get("addProperty",[PropertiesController::class,"showAddPropertyPage"])->name("page.addProperty");
 
     // agent routes
