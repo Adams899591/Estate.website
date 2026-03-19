@@ -6,7 +6,7 @@
  */
 export const properties = [
     {
-        title: "Modern Luxury Villa",
+        title: "Modern Luxury Villa", 
         slug: "modern-luxury-villa-beverly-hills",
         description: "Experience the epitome of luxury living in this stunning modern villa. Featuring floor-to-ceiling windows, a private infinity pool, and smart home integration throughout.",
         price: 2500000.00,

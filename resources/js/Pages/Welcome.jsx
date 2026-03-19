@@ -30,7 +30,7 @@ export default function Welcome() {
 | 1. TABLE: users (Admins, Agents, Customers)
 |    - id: bigint, primary keyper
 |    - name: string
-|    - email: string, unique
+|    - email: string, unique 
 |    - password: string
 |    - role: enum('admin', 'agent', 'user') - Default 'user'
 |    - phone: string, nullable (Seen in Agents page)
