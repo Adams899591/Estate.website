@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DevLux\DevLuxPagesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,9 +16,18 @@ Route::get('/', function () {
     return inertia("Welcome");
 });
  
-
 Route::inertia("home", "Home");
 Route::inertia("estate", "");
+
+
+// ================ ====================
+Route::controller(AuthController::class)->prefix("auth")->group(function(){
+     Route::get("adminLogin", "showloginPage")->name("login");
+     Route::post("authenticateAdmin", "authenticateAdmin")->name("authenticate.admin");
+});
+
+
+
 
 // ================ ====================
 Route::controller(DevLuxPagesController::class)->prefix("DevLux")->group(function(){
@@ -42,6 +52,12 @@ Route::prefix("admin")->group(function(){
     // property routes
     Route::get("properties",[PropertiesController::class,"showPropertiesPage"])->name("page.admin.properties");
     Route::get("addProperty",[PropertiesController::class,"showAddPropertyPage"])->name("page.addProperty");
+    Route::get("editPropertyPage/{id}",[PropertiesController::class,"showEditPropertyPage"])->name("page.editProperty");
+    Route::get("deleteProperty/{id}",[PropertiesController::class,"deleteProperty"])->name("deleteProperty");
+
+    Route::post("editProperty/{id}",[PropertiesController::class,"editProperty"])->name("editProperty");
+
+
 
     // agent routes
     Route::get("agent",[AgentController::class,"showAgentPage"])->name("page.agent");

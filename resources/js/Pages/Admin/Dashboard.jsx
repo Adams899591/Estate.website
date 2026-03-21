@@ -1,9 +1,11 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
-import { Head } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import React from 'react'
 
 const Dashboard = () => {
 
+      const {auth ,properties, flash} = usePage().props;
+         
   // Stats Grid Mock data for the dashboard
   const stats = [
     { title: 'Total Properties', value: '124', change: '+12%', icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>, color: 'bg-blue-500' },
@@ -16,7 +18,7 @@ const Dashboard = () => {
   return (
      <>
         <Head title="Dashboard" />
-
+                                       {/* { JSON.stringify(properties)} */}
             {/* Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {stats.map((stat, index) => (
@@ -50,6 +52,7 @@ const Dashboard = () => {
                     </div>
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-sm text-slate-600">
+                        {/* table head */}
                         <thead className="bg-slate-50 text-slate-700 uppercase font-semibold">
                           <tr>
                             <th className="px-6 py-4">Property Name</th>
@@ -59,64 +62,34 @@ const Dashboard = () => {
                             <th className="px-6 py-4">Action</th>
                           </tr>
                         </thead>
+
+                        {/* table body */}
                         <tbody className="divide-y divide-slate-100 whitespace-nowrap">
-                          <tr className="hover:bg-slate-50 transition-colors">
-                            <td className="px-6 py-4">
-                              <div className="font-medium text-slate-900">Modern Suburban Villa</div>
-                              <div className="text-xs text-slate-500">Los Angeles, CA</div>
-                            </td>
-                            <td className="px-6 py-4 font-medium">$2,800,000</td>
-                            <td className="px-6 py-4">
-                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">For Sale</span>
-                            </td>
-                            <td className="px-6 py-4">2023-10-15</td>
-                            <td className="px-6 py-4">
-                              <button className="text-slate-400 hover:text-blue-600 transition-colors font-medium">Edit</button>
-                            </td>
-                          </tr>
-                          <tr className="hover:bg-slate-50 transition-colors">
-                            <td className="px-6 py-4">
-                              <div className="font-medium text-slate-900">Skyline Penthouse</div>
-                              <div className="text-xs text-slate-500">New York, NY</div>
-                            </td>
-                            <td className="px-6 py-4 font-medium">$25,000/mo</td>
-                            <td className="px-6 py-4">
-                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">For Rent</span>
-                            </td>
-                            <td className="px-6 py-4">2023-10-14</td>
-                            <td className="px-6 py-4">
-                              <button className="text-slate-400 hover:text-blue-600 transition-colors font-medium">Edit</button>
-                            </td>
-                          </tr>
-                          <tr className="hover:bg-slate-50 transition-colors">
-                            <td className="px-6 py-4">
-                              <div className="font-medium text-slate-900">The Grand Oak Mansion</div>
-                              <div className="text-xs text-slate-500">Greenwich, CT</div>
-                            </td>
-                            <td className="px-6 py-4 font-medium">$7,500,000</td>
-                            <td className="px-6 py-4">
-                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">For Sale</span>
-                            </td>
-                            <td className="px-6 py-4">2023-10-12</td>
-                            <td className="px-6 py-4">
-                              <button className="text-slate-400 hover:text-blue-600 transition-colors font-medium">Edit</button>
-                            </td>
-                          </tr>
-                          <tr className="hover:bg-slate-50 transition-colors">
-                            <td className="px-6 py-4">
-                              <div className="font-medium text-slate-900">Seaside Retreat</div>
-                              <div className="text-xs text-slate-500">Malibu, CA</div>
-                            </td>
-                            <td className="px-6 py-4 font-medium">$4,200,000</td>
-                            <td className="px-6 py-4">
-                              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-200 text-slate-700">Pending</span>
-                            </td>
-                            <td className="px-6 py-4">2023-10-10</td>
-                            <td className="px-6 py-4">
-                              <button className="text-slate-400 hover:text-blue-600 transition-colors font-medium">Edit</button>
-                            </td>
-                          </tr>
+                         
+                          {properties.data.map((property) => (
+                            
+                              <tr key={property.id} className="hover:bg-slate-50 transition-colors">
+                                <td className="px-6 py-4">
+                                  <div className="font-medium text-slate-900">{property.title}</div>
+                                  <div className="text-xs text-slate-500">{property.city}</div>
+                                </td>
+                                <td className="px-6 py-4 font-medium">${property.price}</td>
+                                <td className="px-6 py-4">
+                                  {   property.status == "For Sale" ?  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">For Sale</span> 
+                                      : property.status == "For Rent" ? <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">For Rent</span>
+                                      : property.status == "Sold" ? <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">Sold</span> : ""
+                                   }
+                                </td>
+                                <td className="px-6 py-4">{property.created_at}</td>
+                                <td className="px-6 py-4">
+                                  <Link href={route('page.editProperty',{id : property.id})} className="text-slate-400 hover:text-blue-600 transition-colors font-medium">Edit</Link>
+                                </td>
+                              </tr>
+
+                          ))}
+
                         </tbody>
+                        
                       </table>
                     </div>
                   </div>

@@ -1,8 +1,20 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, usePage } from '@inertiajs/react'
 import React from 'react'
 
 const Properties = () => {
+    const {properties,flash} = usePage().props;
+         
+    //  this is used to shorten title text
+    const shortenText = (text, maxLength) => {
+      if (text.length <= maxLength) {
+        return text;
+      }
+      return text.slice(0, maxLength) + '...';
+    };
+
+
+
   return (
     <>
       <Head title="Properties" />
@@ -19,6 +31,21 @@ const Properties = () => {
         </Link>
       </div>
 
+
+     {/* show success message */}
+     { flash.success && (
+        <div className="bg-green-100 text-green-700 px-4 py-3 rounded mb-6">
+          {flash.success}
+        </div>
+      )}
+      {/* show error message */}
+      { flash.error && (
+        <div className="bg-red-100 text-red-700 px-4 py-3 rounded mb-6">
+          {flash.error}
+        </div>
+      )}
+
+
       {/* Filters */}
       <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="relative w-full md:w-96">
@@ -32,12 +59,11 @@ const Properties = () => {
           </span>
         </div>
         <div className="flex gap-3 w-full md:w-auto">
-          <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select  className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>All Status</option>
             <option>For Sale</option>
             <option>For Rent</option>
             <option>Sold</option>
-            <option>Pending</option>
           </select>
           <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>All Types</option>
@@ -48,10 +74,12 @@ const Properties = () => {
         </div>
       </div>
 
+
       {/* Properties Table */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-slate-600">
+            {/* table header */}
             <thead className="bg-slate-50 text-slate-700 uppercase font-semibold">
               <tr>
                 <th className="px-6 py-4">Property</th>
@@ -63,150 +91,67 @@ const Properties = () => {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-                    <tbody className="divide-y divide-slate-100 whitespace-nowrap">
-    
-              <tr className="hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg flex-shrink-0 bg-slate-200 flex items-center justify-center text-slate-400">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+
+            {/* table body */}
+             <tbody className="divide-y divide-slate-100 whitespace-nowrap">
+              
+              {properties.data.map(property => (
+
+                <tr key={property.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg flex-shrink-0 bg-slate-200 flex items-center justify-center text-slate-400">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                      </div>
+                      <div>
+                        <div className="font-medium text-slate-900">{shortenText(property.title,15)}</div>
+                        <div className="text-xs text-slate-500">{property.city}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-medium text-slate-900">Modern Suburban Villa</div>
-                      <div className="text-xs text-slate-500">Los Angeles, CA</div>
+                  </td>
+                  <td className="px-6 py-4">{property.type}</td>
+                  <td className="px-6 py-4">
+                    {  property.status == "For Sale" ? <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">For Sale</span>
+                       : property.status == "For Rent" ? <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">For Rent</span>
+                       : property.status == "Sold" ?  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">Sold</span> : ""                                                                                                                                
+                    }
+                  </td>
+                  <td className="px-6 py-4 font-medium text-slate-900">${property.price}</td>
+                  <td className="px-6 py-4">{property.name}</td>
+                  <td className="px-6 py-4 text-slate-500">{property.created_at}</td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <Link href={route("page.editProperty",{id: property.id})} className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-blue-600 transition-colors">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                      </Link >
+                      <Link  href={route("deleteProperty",{id: property.id})}  className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-red-600 transition-colors">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                      </Link >
                     </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4">House</td>
-                <td className="px-6 py-4">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
-                    For Sale
-                  </span>
-                </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$2,800,000</td>
-                <td className="px-6 py-4">John Doe</td>
-                <td className="px-6 py-4 text-slate-500">2023-10-15</td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-blue-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-red-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg flex-shrink-0 bg-slate-200 flex items-center justify-center text-slate-400">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                    </div>
-                    <div>
-                      <div className="font-medium text-slate-900">Skyline Penthouse</div>
-                      <div className="text-xs text-slate-500">New York, NY</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4">Apartment</td>
-                <td className="px-6 py-4">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
-                    For Rent
-                  </span>
-                </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$25,000/mo</td>
-                <td className="px-6 py-4">Jane Smith</td>
-                <td className="px-6 py-4 text-slate-500">2023-10-14</td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-blue-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-red-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg flex-shrink-0 bg-slate-200 flex items-center justify-center text-slate-400">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                    </div>
-                    <div>
-                      <div className="font-medium text-slate-900">Seaside Retreat</div>
-                      <div className="text-xs text-slate-500">Malibu, CA</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4">Villa</td>
-                <td className="px-6 py-4">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-200 text-slate-700">
-                    Pending
-                  </span>
-                </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$4,200,000</td>
-                <td className="px-6 py-4">Alice Johnson</td>
-                <td className="px-6 py-4 text-slate-500">2023-10-10</td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-blue-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-red-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg flex-shrink-0 bg-slate-200 flex items-center justify-center text-slate-400">
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                    </div>
-                    <div>
-                      <div className="font-medium text-slate-900">Downtown Loft</div>
-                      <div className="text-xs text-slate-500">Chicago, IL</div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4">Apartment</td>
-                <td className="px-6 py-4">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
-                    Sold
-                  </span>
-                </td>
-                <td className="px-6 py-4 font-medium text-slate-900">$450,000</td>
-                <td className="px-6 py-4">John Doe</td>
-                <td className="px-6 py-4 text-slate-500">2023-10-05</td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-blue-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
-                    <button className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-red-600 transition-colors">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
+
+              ))}
+
             </tbody>
+
           </table>
         </div>
-        
-        {/* Pagination */}
-        <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-sm text-slate-500">Showing 1 to 4 of 4 entries</span>
-          <div className="flex gap-1">
-            <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 text-slate-600 text-sm disabled:opacity-50" disabled>Previous</button>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm">1</button>
-            <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 text-slate-600 text-sm" disabled>Next</button>
+
+            {/* Pagination Links - Moved outside table */}
+          <div className="mt-4 flex justify-center gap-2">
+              {(properties.meta?.links || properties.links).map((link, index) => (
+                  link.url ? (
+                      <Link key={index} href={link.url} className={`px-3 py-1 border rounded ${link.active ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`} dangerouslySetInnerHTML={{__html: link.label}} />
+                  ) : (
+                      <span key={index} className="px-3 py-1 border rounded text-gray-400" dangerouslySetInnerHTML={{__html: link.label}}></span>
+                  )
+              ))}
           </div>
-        </div>
+
       </div>
+
+
     </>
   )
 }

@@ -28,7 +28,7 @@ class PropertyFactory extends Factory
             "Rustic Country Estate",
         ];
         $types = ["Villa", "Apartment", "House", "Commercial", "Condo", "Land"];
-        $statuses = ["For Sale", "Pending", "For Rent"];
+        $statuses = ["For Sale", 'Sold', "For Rent"];
         $images = [
             "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
             "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",

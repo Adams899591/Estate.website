@@ -18,9 +18,9 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 12, 2);
             $table->enum('type', ['House', 'Apartment', 'Commercial', 'Villa', 'Condo', 'Land']);
-            $table->enum('status', ['For Sale', 'For Rent', 'Sold', 'Pending']);
+            $table->enum('status', ['For Sale', 'For Rent', 'Sold']);
             $table->integer('bedrooms');
-            $table->integer('bathrooms');
+            $table->integer('bathrooms'); 
             $table->integer('area'); // sqft
             $table->string('address');
             $table->string('city');

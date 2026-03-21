@@ -167,16 +167,6 @@ const Agents = () => {
         </div>
       </div>
 
-            {/* <div className="px-6 py-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="text-sm text-slate-500">Showing 1 to 3 of 3 entries</span>
-            <div className="flex gap-1">
-                <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 text-slate-600 text-sm disabled:opacity-50" disabled>Previous</button>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm">1</button>
-                <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 text-slate-600 text-sm" disabled>Next</button>
-            </div>
-            </div>
-        </div> */}
-    {/* </div> */}
  </>
  )
 }

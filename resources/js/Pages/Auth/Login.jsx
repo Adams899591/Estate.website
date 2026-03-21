@@ -10,9 +10,9 @@ const Login = () => {
 
   const submit = (e) => {
     e.preventDefault()
-    // post(route('login'), {
-    //   onFinish: () => reset('password'),
-    // })
+    post(route('authenticate.admin'), {
+      onFinish: () => reset('password'),
+    })
   }
 
   return (
@@ -56,7 +56,7 @@ const Login = () => {
                             <label className="block text-sm font-medium text-slate-700" htmlFor="password">
                                 Password
                             </label>
-                            {/* <Link href={route('password.request')} className="text-xs text-blue-600 hover:text-blue-700 font-medium">Forgot Password?</Link> */}
+                            <Link href="" className="text-xs text-blue-600 hover:text-blue-700 font-medium">Forgot Password?</Link>
                         </div>
                         <input
                             id="password"
