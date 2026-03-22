@@ -1,9 +1,9 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
-import { Head, Link, usePage } from '@inertiajs/react'
+import { Head, Link, router, usePage } from '@inertiajs/react'
 import React from 'react'
 
 const Properties = () => {
-    const {properties,flash} = usePage().props;
+    const {properties,flash,inputSearch} = usePage().props;
          
     //  this is used to shorten title text
     const shortenText = (text, maxLength) => {
@@ -13,6 +13,36 @@ const Properties = () => {
       return text.slice(0, maxLength) + '...';
     };
 
+    // this function handle Statuse Change
+    function handleStatuseChange(e){
+        const value = e.target.value; // this get the value selected
+
+        router.get("/admin/properties",{status: value}, // send the value selected as a get parameter
+                                       {preserveState: true, // ensure the velue sent stays during pagination
+                                        preserveScroll: true // ensure the velue sent stay during pagination
+                                       }); 
+    };
+
+    // this function handle Types Change
+    function handleTypesChange(e){
+        const value = e.target.value; // this get the value selected
+
+        router.get("/admin/properties",{type: value}, // send the value selected as a get parameter
+                                       {preserveState: true, // ensure the velue sent stays during pagination
+                                        preserveScroll: true // ensure the velue sent stay during pagination
+                                       });       
+    }
+
+    // this function handle Inpute Search Change
+    function handleInputeSearchChange(e) {
+
+        const value = e.target.value; // this get the value selected
+
+        router.get("/admin/properties",{inputSearch: value}, // send the value selected as a get parameter
+                                       {preserveState: true, // ensure the velue sent stays during pagination
+                                        preserveScroll: true // ensure the velue sent stay during pagination
+                                       }); 
+    }
 
 
   return (
@@ -50,7 +80,9 @@ const Properties = () => {
       <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
         <div className="relative w-full md:w-96">
           <input 
-            type="text" 
+            onChange={handleInputeSearchChange}
+            type="text"
+            value={inputSearch || ""}
             placeholder="Search properties..." 
             className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
           />
@@ -59,13 +91,13 @@ const Properties = () => {
           </span>
         </div>
         <div className="flex gap-3 w-full md:w-auto">
-          <select  className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select onChange={handleStatuseChange} className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>All Status</option>
             <option>For Sale</option>
             <option>For Rent</option>
             <option>Sold</option>
           </select>
-          <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select onChange={handleTypesChange} className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>All Types</option>
             <option>House</option>
             <option>Apartment</option>

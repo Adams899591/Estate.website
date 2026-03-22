@@ -6,8 +6,8 @@ const AddProperty = () => {
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     description: '',
-    status: 'For Sale',
-    type: 'House',
+    status: '',
+    type: '',
     price: '',
     bedrooms: '',
     bathrooms: '',
@@ -21,14 +21,14 @@ const AddProperty = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // You will need to create a POST route in web.php and a corresponding controller method.
-    // For example: Route::post("properties",[PropertiesController::class,"storeProperty"])->name("admin.properties.store");
-    post(route('admin.properties.store'), {
+ 
+     post(route('addProperty'), {
         // You can add callbacks here, e.g., for success
         onSuccess: () => {
             // Optionally, reset the form or show a success message
         }
     });
+  
   }
 
   return (
@@ -70,7 +70,6 @@ const AddProperty = () => {
                 <option>House</option>
                 <option>Apartment</option>
                 <option>Commercial</option>
-                <option>Villa</option>
               </select>
             </div>
           </div>
@@ -110,18 +109,22 @@ const AddProperty = () => {
             <div className="md:col-span-2">
               <label htmlFor="address" className="block text-sm font-medium text-slate-600 mb-1">Address</label>
               <input id="address" type="text" value={data.address} onChange={e => setData('address', e.target.value)} className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="e.g. 123 Main St" />
+              {errors.address && <div className="text-red-500 text-xs mt-1">{errors.address}</div>}
             </div>
             <div>
               <label htmlFor="city" className="block text-sm font-medium text-slate-600 mb-1">City</label>
               <input id="city" type="text" value={data.city} onChange={e => setData('city', e.target.value)} className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="e.g. Los Angeles" />
+               {errors.city && <div className="text-red-500 text-xs mt-1">{errors.city}</div>}
             </div>
             <div>
               <label htmlFor="state" className="block text-sm font-medium text-slate-600 mb-1">State/Province</label>
               <input id="state" type="text" value={data.state} onChange={e => setData('state', e.target.value)} className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="e.g. CA" />
+              {errors.state && <div className="text-red-500 text-xs mt-1">{errors.state}</div>}   
             </div>
             <div>
               <label htmlFor="zipcode" className="block text-sm font-medium text-slate-600 mb-1">ZIP/Postal Code</label>
               <input id="zipcode" type="text" value={data.zipcode} onChange={e => setData('zipcode', e.target.value)} className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" placeholder="e.g. 90001" />
+              {errors.zipcode && <div className="text-red-500 text-xs mt-1">{errors.zipcode}</div>} 
             </div>
           </div>
         </div>

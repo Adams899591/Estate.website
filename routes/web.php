@@ -56,6 +56,7 @@ Route::prefix("admin")->group(function(){
     Route::get("deleteProperty/{id}",[PropertiesController::class,"deleteProperty"])->name("deleteProperty");
 
     Route::post("editProperty/{id}",[PropertiesController::class,"editProperty"])->name("editProperty");
+    Route::post("addProperty",[PropertiesController::class,"addProperty"])->name("addProperty");
 
 
 
