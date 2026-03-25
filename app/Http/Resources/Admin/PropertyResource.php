@@ -41,7 +41,7 @@ class PropertyResource extends JsonResource
             "image" => $this->image,
             "created_at" => $this->created_at->format("Y-m-d"),
 
-            // this data come from relationship
+            // this data come from relationship to user
             "name" => $this->user?->name,
         ];
     }

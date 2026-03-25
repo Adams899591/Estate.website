@@ -22,7 +22,7 @@ const AddProperty = () => {
   function handleSubmit(e) {
     e.preventDefault();
  
-     post(route('addProperty'), {
+     put(route('addProperty'), {
         // You can add callbacks here, e.g., for success
         onSuccess: () => {
             // Optionally, reset the form or show a success message

@@ -1,9 +1,11 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
 import { Head, Link, router, usePage } from '@inertiajs/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 const Properties = () => {
     const {properties,flash,inputSearch} = usePage().props;
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
          
     //  this is used to shorten title text
     const shortenText = (text, maxLength) => {
@@ -43,6 +45,22 @@ const Properties = () => {
                                         preserveScroll: true // ensure the velue sent stay during pagination
                                        }); 
     }
+
+    // Open delete confirmation modal
+    const openDeleteModal = (id) => {
+        setDeleteId(id);
+        setShowDeleteModal(true);
+    };
+
+    // Confirm and execute delete
+    const confirmDelete = () => {
+        router.delete(route("deleteProperty", { id: deleteId }), {
+            onSuccess: () => {
+                setShowDeleteModal(false);
+                setDeleteId(null);
+            },
+        });
+    };
 
 
   return (
@@ -156,9 +174,9 @@ const Properties = () => {
                       <Link href={route("page.editProperty",{id: property.id})} className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-blue-600 transition-colors">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                       </Link >
-                      <Link  href={route("deleteProperty",{id: property.id})}  className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-red-600 transition-colors">
+                      <button onClick={() => openDeleteModal(property.id)} className="p-2 hover:bg-slate-200 rounded text-slate-500 hover:text-red-600 transition-colors">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                      </Link >
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -182,6 +200,33 @@ const Properties = () => {
           </div>
 
       </div>
+
+
+      
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-bold text-slate-800 mb-2">Delete Property</h3>
+            <p className="text-slate-600 mb-6">Are you sure you want to delete this property? This action cannot be undone.</p>
+            <div className="flex justify-end gap-3">
+              <button 
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors text-sm font-medium"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
 
     </>

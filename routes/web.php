@@ -12,18 +12,17 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    // return Inertia::render("Admin/Login");
     return inertia("Welcome");
 });
- 
-Route::inertia("home", "Home");
-Route::inertia("estate", "");
 
 
 // ================ ====================
 Route::controller(AuthController::class)->prefix("auth")->group(function(){
+
      Route::get("adminLogin", "showloginPage")->name("login");
      Route::post("authenticateAdmin", "authenticateAdmin")->name("authenticate.admin");
+     Route::post("logout", "logoutAdmin")->name("logout");
+     
 });
 
 
@@ -53,15 +52,17 @@ Route::prefix("admin")->group(function(){
     Route::get("properties",[PropertiesController::class,"showPropertiesPage"])->name("page.admin.properties");
     Route::get("addProperty",[PropertiesController::class,"showAddPropertyPage"])->name("page.addProperty");
     Route::get("editPropertyPage/{id}",[PropertiesController::class,"showEditPropertyPage"])->name("page.editProperty");
-    Route::get("deleteProperty/{id}",[PropertiesController::class,"deleteProperty"])->name("deleteProperty");
+    Route::delete("deleteProperty/{id}",[PropertiesController::class,"deleteProperty"])->name("deleteProperty");
 
     Route::post("editProperty/{id}",[PropertiesController::class,"editProperty"])->name("editProperty");
-    Route::post("addProperty",[PropertiesController::class,"addProperty"])->name("addProperty");
+    Route::put("addProperty",[PropertiesController::class,"addProperty"])->name("addProperty");
 
 
 
     // agent routes
     Route::get("agent",[AgentController::class,"showAgentPage"])->name("page.agent");
+    Route::get("addAgentPage",[AgentController::class,"showAddAgenPage"])->name("page.addAgent");
+    Route::put("addAgent",[AgentController::class,"addAgent"])->name("addAgent");
 
     // messages routes
     Route::get("message",[MessagesController::class,"showMassagesPage"])->name("page.messages");

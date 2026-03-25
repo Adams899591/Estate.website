@@ -8,6 +8,7 @@ use App\Http\Resources\Admin\PropertyResource;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,7 +75,18 @@ class PropertiesController extends Controller
 
     // Delete Property 
     public function deleteProperty($id){
-          dd("ary y sure u want to delete " . $id);
+        
+        $property = Property::FindOrFail($id);
+
+        // check if the property has an image and delete it from storage
+        if ($property->image) {
+           Storage::disk("public")->delete($property->image);
+        }
+
+        $property->delete();
+
+        return redirect()->route("page.admin.properties")->with("success", "Property deleted successfully");
+
        
     }
 

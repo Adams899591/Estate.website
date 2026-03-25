@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(50)->create();
 
-        Property::factory(6)->create();
+        Property::factory(11)->create();
 
         Message::factory(30)->create();
 

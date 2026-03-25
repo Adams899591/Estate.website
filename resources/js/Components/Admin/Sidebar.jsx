@@ -1,6 +1,16 @@
+import { router, useForm, usePage } from '@inertiajs/react'
 import React from 'react'
 
 const Sidebar = ({isSidebarOpen, SidebarItem }) => {
+
+    const {auth} = usePage().props;
+         console.log(auth);
+         
+    // this function handles logout
+    function handleLogout() {
+        router.post("/auth/logout");
+    }
+    
   return (
      <>
         {/* ==================== SIDEBAR START ==================== */}
@@ -23,16 +33,18 @@ const Sidebar = ({isSidebarOpen, SidebarItem }) => {
 
             <div className="p-4 border-t border-slate-800">
             <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">JD</div>
+                <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-sm font-bold">{auth.user.name.split(" ").map((n) => n[0].toUpperCase()).join("")}</div>
                 {isSidebarOpen && (
                 <>
                     <div>
-                        <p className="text-sm font-semibold">John Doe</p>
-                        <p className="text-xs text-slate-400">Admin</p>
+                        <p className="text-sm font-semibold">{auth.user.name}</p>
+                        <p className="text-xs text-slate-400">{auth.user.role}</p>
                     </div>
-                    <button className="ml-auto text-slate-400 hover:text-white transition-colors" title="Logout">
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                    </button>
+                    
+                        <button onClick={handleLogout} className="ml-auto text-slate-400 hover:text-white transition-colors" title="Logout">
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        </button>
+                   
                 </>
                 )}
             </div>

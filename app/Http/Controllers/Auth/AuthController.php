@@ -37,4 +37,12 @@ class AuthController extends Controller
 
         
     }
+
+    // logout admin
+    public function logoutAdmin(){
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route("login");
+    }
 }

@@ -26,8 +26,13 @@ class PropertyFactory extends Factory
             "Spacious Commercial Office",
             "Minimalist Seaside Condo",
             "Rustic Country Estate",
+            "Downtown Penthouse",
+            "Cozy Family Cottage",
+            "Contemporary Home",
+            "Executive City Condo",
+            "Exclusive Beachfront Villa",
         ];
-        $types = ["Villa", "Apartment", "House", "Commercial", "Condo", "Land"];
+        $types = [ "Apartment", "House", "Commercial"];
         $statuses = ["For Sale", 'Sold', "For Rent"];
         $images = [
             "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
@@ -36,6 +41,12 @@ class PropertyFactory extends Factory
             "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
             "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
             "https://images.unsplash.com/photo-1600596542815-2495db9dc2c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
         ];
 
         $title = fake()->unique()->randomElement($titles) . ' in ' . fake()->city();
