@@ -39,6 +39,52 @@ const Messages = () => {
       {/* Messages List */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         <div className="divide-y divide-slate-100">
+            {/* Payment Notification with Download Receipt */}
+            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-green-500 bg-green-50/30">
+                <div className="flex justify-between items-start mb-2">
+                    <div className="flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">System Notification</span>
+                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">Payment</span>
+                    </div>
+                    <span className="text-xs text-slate-500">Just now</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 className="text-sm font-medium text-slate-800 mb-1">Payment Confirmed: Luxury Penthouse</h3>
+                        <p className="text-sm text-slate-600">The full payment for the Luxury Penthouse has been received and verified.</p>
+                    </div>
+                    <button className="flex-shrink-0 bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium hover:bg-slate-50 transition-colors flex items-center gap-2 w-fit">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        Download Receipt
+                    </button>
+                </div>
+            </div>
+
+            {/* New Product Notification (Duplicated from Header) */}
+            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-blue-500">
+                <div className="flex justify-between items-start mb-2">
+                    <div className="flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">Admin Activity</span>
+                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">New Property</span>
+                    </div>
+                    <span className="text-xs text-slate-500">10 mins ago</span>
+                </div>
+                <h3 className="text-sm font-medium text-slate-800 mb-1">New Property Added: Modern Suburban Villa</h3>
+                <p className="text-sm text-slate-600 line-clamp-2">John Doe has successfully added a new property listing to the database.</p>
+            </div>
+
+            {/* New Admin Notification */}
+            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-purple-500">
+                <div className="flex justify-between items-start mb-2">
+                    <div className="flex items-center gap-2">
+                        <span className="font-semibold text-slate-900">Team Update</span>
+                    </div>
+                    <span className="text-xs text-slate-500">1 hour ago</span>
+                </div>
+                <h3 className="text-sm font-medium text-slate-800 mb-1">New Administrator Joined</h3>
+                <p className="text-sm text-slate-600 line-clamp-2">Robert Smith has been added as a new administrator. You can now assign tasks to them.</p>
+            </div>
+
             {/* Mock Message Item 1 */}
             <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-blue-500 bg-blue-50/30">
                 <div className="flex justify-between items-start mb-2">
@@ -87,7 +133,7 @@ const Messages = () => {
           </div>
         </div>
       </div>
-    </>
+    </> 
   )
 }
 
