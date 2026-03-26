@@ -72,6 +72,7 @@ Route::prefix("admin")->group(function(){
 
     // settings routes
     Route::get("settings",[SettingsController::class,"showSettingsPage"])->name("page.settings");
+    Route::put("updateSettings", [SettingsController::class, "updateUserSettings"])->name("updateSettings");
 
 });
 

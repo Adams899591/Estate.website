@@ -1,5 +1,5 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
-import { Head } from '@inertiajs/react'
+import { Head, usePage } from '@inertiajs/react'
 import React from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement } from 'chart.js';
 import { Doughnut, Bar, Line } from 'react-chartjs-2';
@@ -7,36 +7,40 @@ import { Doughnut, Bar, Line } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement);
 
 const Analytics = () => {
+       const {analytics} = usePage().props;
+
+       
+       
   // Data for Property Status Distribution Chart (Doughnut)
   const propertyStatusData = {
-    labels: ['For Sale', 'For Rent', 'Sold', 'Pending'],
+    labels: ['For Sale', 'For Rent', 'Sold'],
     datasets: [
       {
         label: '# of Properties',
-        data: [50, 30, 25, 15],
+        data: [analytics.forSale, analytics.forRent, analytics.sold],
         backgroundColor: [
           'rgba(59, 130, 246, 0.7)',
           'rgba(245, 158, 11, 0.7)',
           'rgba(16, 185, 129, 0.7)',
-          'rgba(107, 114, 128, 0.7)',
         ],
         borderColor: [
           'rgba(59, 130, 246, 1)',
           'rgba(245, 158, 11, 1)',
           'rgba(16, 185, 129, 1)',
-          'rgba(107, 114, 128, 1)',
         ],
         borderWidth: 1,
       },
     ],
   };
 
+
+
   // Data for Property Types Chart (Bar)
   const propertyTypesData = {
-    labels: ['House', 'Apartment', 'Commercial', 'Villa', 'Land'],
+    labels: ['House', 'Apartment', 'Commercial'],
     datasets: [{
       label: 'Number of Properties',
-      data: [65, 45, 20, 15, 5],
+      data: [analytics.house, analytics.apartment, analytics.commercial],
       backgroundColor: 'rgba(96, 165, 250, 0.6)',
       borderColor: 'rgba(59, 130, 246, 1)',
       borderWidth: 1
@@ -50,6 +54,8 @@ const Analytics = () => {
       title: { display: true, text: 'Property Types Distribution' },
     },
   };
+
+
 
   // Data for Monthly Views Chart (Line)
   const monthlyViewsData = {

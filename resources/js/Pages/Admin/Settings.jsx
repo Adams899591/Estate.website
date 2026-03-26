@@ -1,13 +1,34 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
-import { Head } from '@inertiajs/react'
+import { Head, router, useForm, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
 
 const Settings = () => {
+
+    const {flash, auth} = usePage().props;
+
+  // this is used on notification section in other to taggle notification
   const [notifications, setNotifications] = useState({
     newProperties: true,
     newMessages: true,
     weeklySummary: false,
   });
+
+  // form data
+  const {data, setData, put, processing, errors} = useForm({
+       name: auth.user.name,
+       email: auth.user.email,
+       current_password : "",
+       password: "",
+       password_confirmation: '',
+   });
+
+   // handles form submission
+   function handleSubmit(e) {
+      e.preventDefault();
+      put(route("updateSettings"));
+   }
+
+
 
   return (
       <>
@@ -19,18 +40,35 @@ const Settings = () => {
             <p className="text-slate-500 text-sm mt-1">Manage your account and site settings.</p>
         </div>
 
+        {/* show success message */}
+        { flash.success && (
+            <div className="bg-green-100 text-green-700 px-4 py-3 rounded mb-6">
+            {flash.success}
+            </div>
+        )}
+        {/* show error message */}
+        { flash.error && (
+            <div className="bg-red-100 text-red-700 px-4 py-3 rounded mb-6">
+            {flash.error}
+            </div>
+        )}
+
         <div className="space-y-8">
+         <form onSubmit={handleSubmit}>
             {/* Profile Information Section */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
                 <h2 className="text-lg font-semibold text-slate-700 mb-4">Profile Information</h2>
                 <div className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-slate-600 mb-1">Full Name</label>
-                        <input id="name" type="text" defaultValue="John Doe" className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                        <input id="name" type="text" value={data.name} onChange={e => setData("name", e.target.value)} className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                         {errors.name && <div className="text-red-500 text-xs mt-1">{errors.name}</div>}  
                     </div>
+                   
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-slate-600 mb-1">Email Address</label>
-                        <input id="email" type="email" defaultValue="admin@devluxestates.com" className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                        <input id="email" type="email" value={data.email} onChange={e => setData("email", e.target.value)} className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                        {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>} 
                     </div>
                 </div>
             </div>
@@ -41,18 +79,22 @@ const Settings = () => {
                 <div className="space-y-4">
                     <div>
                         <label htmlFor="current_password" className="block text-sm font-medium text-slate-600 mb-1">Current Password</label>
-                        <input id="current_password" type="password" className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                        <input id="current_password" type="password" value={data.current_password} onChange={ e => setData("current_password", e.target.value)} className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                     {errors.current_password && <div className="text-red-500 text-xs mt-1">{errors.current_password}</div>}
                     </div>
                     <div>
                         <label htmlFor="new_password" className="block text-sm font-medium text-slate-600 mb-1">New Password</label>
-                        <input id="new_password" type="password" className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                        <input id="new_password" type="password" value={data.password} onChange={ e => setData("password", e.target.value)} className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                     {errors.password && <div className="text-red-500 text-xs mt-1">{errors.password}</div>}
                     </div>
                     <div>
                         <label htmlFor="confirm_password" className="block text-sm font-medium text-slate-600 mb-1">Confirm New Password</label>
-                        <input id="confirm_password" type="password" className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                        <input id="confirm_password" type="password" value={data.password_confirmation} onChange={ e => setData("password_confirmation", e.target.value)} className="w-full md:w-1/2 px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" />
+                      {errors.password_confirmation && <div className="text-red-500 text-xs mt-1">{errors.password_confirmation}</div>}
                     </div>
                 </div>
             </div>
+
 
             {/* Notification Settings Section */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
@@ -96,7 +138,10 @@ const Settings = () => {
                     Save Changes
                 </button>
             </div>
+           </form>
         </div>
+
+
         <style>{`
             input:checked ~ .dot {
               transform: translateX(1.5rem);
