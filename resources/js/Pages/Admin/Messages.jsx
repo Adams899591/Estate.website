@@ -4,7 +4,7 @@ import React from 'react'
 
 const Messages = () => {
 
-    const {messages} = usePage().props;
+    const {messages, flash} = usePage().props;
 
      console.log(messages);
 
@@ -34,6 +34,22 @@ const Messages = () => {
           <p className="text-slate-500 text-sm mt-1">View and manage inquiries</p>
         </div>
       </div>
+
+
+        {/* show success message */}
+        { flash.success && (
+            <div className="bg-green-100 text-green-700 px-4 py-3 rounded mb-6">
+            {flash.success}
+            </div>
+        )}
+        {/* show error message */}
+        { flash.error && (
+            <div className="bg-red-100 text-red-700 px-4 py-3 rounded mb-6">
+            {flash.error}
+            </div>
+        )}
+
+
 
       {/* Filters */}
       <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
