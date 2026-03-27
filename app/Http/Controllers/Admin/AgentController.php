@@ -3,13 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AddAgentRequest;
 use App\Http\Resources\Admin\AgentResource;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class AgentController extends Controller
 {
+   // capiterlize the first letter of each word in the string
+    private function capitalizeFirstLetter($string){
+        return ucfirst($string);
+    }
+
+
 
     //show Agent Page
     public function showAgentPage(){
@@ -48,31 +57,51 @@ class AgentController extends Controller
          return Inertia::render("Admin/AddAgent");
     }
 
+
     // handles Add Agent
-    public function addAgent(){
+    public function addAgent(AddAgentRequest $request){
 
        // validate the request data
-        $validatedData = request()->validate([
-            "name" => "required|string|max:255",
-            "email" => "required|email|unique:users,email",
-            "phone" => "required|string|max:20",
-            "status" => "required|in:active,Inactive",
-            "role" => "required|in:admin,agent",
-            "password" => "required|string|min:8|confirmed",
-        ]);
-        //   dd("reach");
+       $validatedData = $request->validated();
+     try {
+       
+            DB::beginTransaction();   // start a transaction
 
-        // create a new agent using the validated data
-        User::create([
-            "name" => $validatedData["name"],
-            "email" => $validatedData["email"],
-            "phone" => $validatedData["phone"],
-            "status" => $validatedData["status"],
-            "password" => bcrypt($validatedData["password"]),
-        ]);
+                // create a new agent using the validated data
+                    $user =  User::create([
+                        "name" => $validatedData["name"],
+                        "email" => $validatedData["email"],
+                        "phone" => $validatedData["phone"],
+                        "status" => $validatedData["status"],
+                        "role" => $validatedData["role"],
+                        "password" => bcrypt($validatedData["password"]),
 
-        // redirect back to the agents page with a success message
-        return redirect()->route("page.agent")->with("success", "Agent added successfully.");
+                    ]);
+
+                    //  insert into message table
+                    Message::create([
+                        "type" => "userModel",
+                        "title" =>  "Team Update",
+                        "message" => "New " . $this->capitalizeFirstLetter($user->role) . " " . $user->name . " was added to the system.",
+                        "summary" => "New Administrator Joined",
+                        "user_id" => $user->id,
+                        "is_read" => false,   
+                    ]);
+
+            DB::commit(); // commit the transaction
+             
+                    // redirect back to the agents page with a success message
+                    return redirect()->route("page.agent")->with("success", "Agent added successfully.");
+
+     } catch (\Throwable $th) {
+           DB::rollBack(); // roll back the transaction if any error occurs
+                    // redirect back to the agents page with an error message
+                    return redirect()->route("page.agent")->with("error", "Failed to add agent. Please try again.");
+     }
+   
+
+
+
     }
 
 }

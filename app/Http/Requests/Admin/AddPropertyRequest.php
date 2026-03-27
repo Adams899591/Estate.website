@@ -27,7 +27,7 @@ class AddPropertyRequest extends FormRequest
             "price" => "required|numeric",
             "type" => "required|string",
             "status" => "required|string",
-            "image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg",
             "bedrooms" => "required|integer",
             "bathrooms" => "required|integer",
             "area" => "required|numeric",

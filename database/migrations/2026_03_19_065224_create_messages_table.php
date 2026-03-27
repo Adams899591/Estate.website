@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('subject')->nullable();
+            $table->string('type');
+            $table->string('title');
             $table->text('message');
-            $table->foreignId('property_id')->nullable()->constrained('properties')->nullOnDelete();
-            $table->boolean('is_read')->default(false);
+            $table->string("summary");
+            $table->boolean('is_read');
+            $table->integer("user_id");
+            $table->string("receipt")->nullable();
             $table->timestamps();
         });
     }

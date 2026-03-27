@@ -137,3 +137,85 @@ export default function Welcome() {
 | }
 |
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            {/* New Product Notification (Duplicated from Header) */}
+            {propertyAdded && propertyAdded.data.map(property => (
+              <div key={property.id} className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4">
+                  <div className="flex-shrink-0 pt-1">
+                      {/* Example: Unread Icon */}
+                      {property.is_read == 1 ?                     <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7m-6 0l4 4L19 7" />
+                    </svg> : <div className="w-2.5 h-2.5 bg-blue-600 rounded-full mt-1.5 ml-1"></div>}
+                      
+                  </div>
+                  <div className="flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                          <div className="flex items-center gap-2">
+                              <span className="font-semibold text-slate-900">{property.title}</span>
+                              <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">Property</span>
+                          </div>
+                          <span className="text-xs text-slate-500">{property.created_at}</span>
+                      </div>
+                      <h3 className="text-sm font-bold text-slate-900 mb-1">{property.summery}</h3>
+                      <p className="text-sm text-slate-600 line-clamp-2">{property.message}</p>
+                  </div>
+              </div>
+           ))}
+
+            {/* New Admin Notification */}
+            {teamUpdate && teamUpdate.data.map((update) => (
+
+                <div key={update.id} className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4" >
+                    <div className="flex-shrink-0 pt-1">
+                        {/* Dynamic Status Icon */}
+                        {update.is_read == 1 ? (
+                            <svg className="w-5 h-5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg> 
+                        ) : (
+                            <div className="w-2.5 h-2.5 bg-blue-600 rounded-full mt-1.5 ml-1"></div>
+                        )}
+                    </div>
+                    <div className="flex-1">
+                        <div className="flex justify-between items-start mb-2">
+                            <div className="flex items-center gap-2">
+                                <span className="font-semibold text-slate-900">{update.title}</span>
+                                <span className="px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-700">Administrator</span>
+                            </div>
+                            <span className="text-xs text-slate-500">{update.created_at}</span>
+                        </div>
+                        <h3 className={`text-sm mb-1 ${!update.is_read ? 'font-bold text-slate-900' : 'font-medium text-slate-800'}`}>
+                            {update.summary}
+                        </h3>
+                        <p className="text-sm text-slate-600 line-clamp-2">{update.message}</p>
+                    </div>
+                </div>
+
+            ))} 

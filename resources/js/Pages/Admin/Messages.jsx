@@ -1,8 +1,28 @@
 import AdminDashboardLayout from '@/Layouts/Admin/AdminDashboardLayout'
-import { Head } from '@inertiajs/react'
+import { Head, Link, router, usePage } from '@inertiajs/react'
 import React from 'react'
 
 const Messages = () => {
+
+    const {messages} = usePage().props;
+
+     console.log(messages);
+
+    // this function handles Message Search
+     function handlesMessageSearch(e) {
+
+      const value = e.target.value; // this get the value selected
+
+        router.get("/admin/message",{message: value}, // send the value selected as a get parameter
+                                       {preserveState: true, // ensure the velue sent stays during pagination
+                                        preserveScroll: true // ensure the velue sent stay during pagination
+                                       });
+
+
+     }
+     
+     
+
   return (
     <>
       <Head title="Messages" />
@@ -28,10 +48,10 @@ const Messages = () => {
           </span>
         </div>
         <div className="flex gap-3 w-full md:w-auto">
-          <select className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select onChange={handlesMessageSearch} className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>All Messages</option>
-            <option>Unread</option>
-            <option>Read</option>
+            <option value={0}>Un Read</option>
+            <option value={1}>Read</option>
           </select>
         </div>
       </div>
@@ -39,99 +59,135 @@ const Messages = () => {
       {/* Messages List */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         <div className="divide-y divide-slate-100">
+
+
             {/* Payment Notification with Download Receipt */}
-            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-green-500 bg-green-50/30">
-                <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">System Notification</span>
-                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">Payment</span>
-                    </div>
-                    <span className="text-xs text-slate-500">Just now</span>
+            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4">
+                <div className="flex-shrink-0 pt-1">
+                    {/* Example: Read Icon */}
+                    <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7m-6 0l4 4L19 7" />
+                    </svg>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <h3 className="text-sm font-medium text-slate-800 mb-1">Payment Confirmed: Luxury Penthouse</h3>
-                        <p className="text-sm text-slate-600">The full payment for the Luxury Penthouse has been received and verified.</p>
+                <div className="flex-1">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="flex items-center gap-2">
+                            <span className="font-semibold text-slate-900">System Notification</span>
+                            <span className="px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">Payment</span>
+                        </div>
+                        <span className="text-xs text-slate-500">Just now</span>
                     </div>
-                    <button className="flex-shrink-0 bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium hover:bg-slate-50 transition-colors flex items-center gap-2 w-fit">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        Download Receipt
-                    </button>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h3 className="text-sm font-medium text-slate-800 mb-1">Payment Confirmed: Luxury Penthouse</h3>
+                            <p className="text-sm text-slate-600">The full payment for the Luxury Penthouse has been received and verified.</p>
+                        </div>
+                        <button className="flex-shrink-0 bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-lg text-xs font-medium hover:bg-slate-50 transition-colors flex items-center gap-2 w-fit">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            Download Receipt
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* New Product Notification (Duplicated from Header) */}
-            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-blue-500">
-                <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Admin Activity</span>
-                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">New Property</span>
-                    </div>
-                    <span className="text-xs text-slate-500">10 mins ago</span>
-                </div>
-                <h3 className="text-sm font-medium text-slate-800 mb-1">New Property Added: Modern Suburban Villa</h3>
-                <p className="text-sm text-slate-600 line-clamp-2">John Doe has successfully added a new property listing to the database.</p>
-            </div>
+          {/* start data maping */}
+          {messages.data.map(message => (     
+            
+              <span key={message.id}>
+              {/* spain that wrap all element and hold the key id */}
 
-            {/* New Admin Notification */}
-            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-purple-500">
-                <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Team Update</span>
-                    </div>
-                    <span className="text-xs text-slate-500">1 hour ago</span>
-                </div>
-                <h3 className="text-sm font-medium text-slate-800 mb-1">New Administrator Joined</h3>
-                <p className="text-sm text-slate-600 line-clamp-2">Robert Smith has been added as a new administrator. You can now assign tasks to them.</p>
-            </div>
 
-            {/* Mock Message Item 1 */}
-            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-blue-500 bg-blue-50/30">
-                <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">John Buyer</span>
-                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">New</span>
-                    </div>
-                    <span className="text-xs text-slate-500">2 hours ago</span>
-                </div>
-                <h3 className="text-sm font-medium text-slate-800 mb-1">Inquiry about Modern Suburban Villa</h3>
-                <p className="text-sm text-slate-600 line-clamp-2">Hi, I'm interested in viewing this property. Is it available for a tour this weekend? I am available on Saturday afternoon.</p>
-            </div>
+                   {/* map through this if message title is Team Update */}
+                 {message.title == "Team Update" &&  
 
-            {/* Mock Message Item 2 */}
-            <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-transparent">
-                <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Sarah Renter</span>
+                    <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4" >
+                                      <div className="flex-shrink-0 pt-1">
+                                          {/* Dynamic Status Icon */}
+                                          {message.is_read == 1 ? (
+                                              <svg className="w-5 h-5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                              </svg> 
+                                          ) : (
+                                              <div className="w-2.5 h-2.5 bg-blue-600 rounded-full mt-1.5 ml-1"></div>
+                                          )}
+                                      </div>
+                                      <div className="flex-1">
+                                          <div className="flex justify-between items-start mb-2">
+                                              <div className="flex items-center gap-2">
+                                                  <span className="font-semibold text-slate-900">{message.title}</span>
+                                                  <span className="px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-700">Administrator</span>
+                                              </div>
+                                              <span className="text-xs text-slate-500">{message.created_at}</span>
+                                          </div>
+                                          <h3 className={`text-sm mb-1 ${!message.is_read ? 'font-bold text-slate-900' : 'font-medium text-slate-800'}`}>
+                                              {message.summary}
+                                          </h3>
+                                          <p className="text-sm text-slate-600 line-clamp-2">{message.message}</p>
+                                      </div>
                     </div>
-                    <span className="text-xs text-slate-500">Yesterday</span>
-                </div>
-                <h3 className="text-sm font-medium text-slate-800 mb-1">Question regarding pet policy</h3>
-                <p className="text-sm text-slate-600 line-clamp-2">Hello, I saw the Skyline Penthouse listing. Does the building allow small dogs? I have a pug.</p>
-            </div>
 
-             {/* Mock Message Item 3 */}
-             <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-transparent">
-                <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">Real Estate Weekly</span>
-                    </div>
-                    <span className="text-xs text-slate-500">Oct 20, 2023</span>
-                </div>
-                <h3 className="text-sm font-medium text-slate-800 mb-1">Newsletter: Market Trends</h3>
-                <p className="text-sm text-slate-600 line-clamp-2">Check out the latest trends in the housing market for Q4. Prices are stabilizing in most regions...</p>
-            </div>
+                  }
+
+
+                  {/* map through this if message title is New Property Added */}
+                  { message.title == "New Property Added" && 
+
+                      <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4" >
+                          <div className="flex-shrink-0 pt-1">
+                              {/* Dynamic Status Icon */}
+                              {message.is_read == 1 ? (
+                                  <svg className="w-5 h-5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                                  </svg> 
+                              ) : (
+                                  <div className="w-2.5 h-2.5 bg-blue-600 rounded-full mt-1.5 ml-1"></div>
+                              )}
+                          </div>
+                          <div className="flex-1">
+                              <div className="flex justify-between items-start mb-2">
+                                  <div className="flex items-center gap-2">
+                                      <span className="font-semibold text-slate-900">{message.title}</span>
+                                      <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">Property</span>
+                                  </div>
+                                  <span className="text-xs text-slate-500">{message.created_at}</span>
+                              </div>
+                              <h3 className={`text-sm mb-1 ${!message.is_read ? 'font-bold text-slate-900' : 'font-medium text-slate-800'}`}>
+                                  {message.summary}
+                              </h3>
+                              <p className="text-sm text-slate-600 line-clamp-2">{message.message}</p>
+                          </div>
+                      </div>
+                  }
+
+
+              
+              {/* spain that close all element and hold the key id */}
+              </span>
+
+          //  End data maping 
+          ))} 
+ 
+
+
+    
+
+
+          
+
         </div>
 
-        {/* Pagination */}
-        <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-sm text-slate-500">Showing 1 to 3 of 3 entries</span>
-          <div className="flex gap-1">
-            <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 text-slate-600 text-sm disabled:opacity-50" disabled>Previous</button>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm">1</button>
-            <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 text-slate-600 text-sm" disabled>Next</button>
+          {/* Pagination */}
+          <div className="mt-4 flex justify-center gap-2">
+              {(messages.meta?.links || messages.links).map((link, index) => (
+                  link.url ? (
+                      <Link key={index} href={link.url} className={`px-3 py-1 border rounded ${link.active ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`} dangerouslySetInnerHTML={{__html: link.label}} />
+                  ) : (
+                      <span key={index} className="px-3 py-1 border rounded text-gray-400" dangerouslySetInnerHTML={{__html: link.label}}></span>
+                  )
+              ))}
           </div>
-        </div>
+
+
       </div>
     </> 
   )

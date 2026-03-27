@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AddPropertyRequest;
 use App\Http\Resources\Admin\PropertyResource;
+use App\Models\Message;
 use App\Models\Property;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Symfony\Component\HttpFoundation\Request;
 
 class PropertiesController extends Controller
 {
@@ -120,7 +122,7 @@ class PropertiesController extends Controller
 
     // handles Add Property
     public function addproperty(AddPropertyRequest $request){
-     
+       
         $data = $request->all(); // get all  request 
 
          // image upload handling
@@ -136,6 +138,17 @@ class PropertiesController extends Controller
          $property->slug = Str::slug($request["title"]) . '-' . uniqid(); // generate a unique slug for the property
          $property->agent_id = Auth::id(); // associate the property with the currently authenticated user (agent)
          $property->save();
+
+
+                           // insert into message table
+        Message::create([
+            "type" => "propertyModel",
+            "title" =>  "New Property Added",
+            "message" =>  Auth::user()->name . " has successfully added a new property listing to the database.",
+            "summary" => "New Property Added: ". $property->title,
+            "user_id" => $property->agent_id,
+            "is_read" => false,   
+        ]);
 
         return redirect()->route("page.admin.properties")->with("success", "Property Added successfully");
 
