@@ -4,7 +4,7 @@ import React from 'react'
 const NotificationBell = ({isNotificationsOpen}) => {
 
     // Note: the fetchNotifications is comming from AppServiceProvider.php so it can be globaly accessable
-    const {fetchNotifications} = usePage().props;
+    const {fetchNotifications,notificationsCount} = usePage().props;
 
     function handleButton($id) {
        const notifyId = $id
@@ -110,9 +110,15 @@ const NotificationBell = ({isNotificationsOpen}) => {
 
 
                   </div>
-                  <Link href={route("bell.notify")}  className="block w-full text-center text-sm font-medium text-blue-600 hover:bg-slate-100 rounded-b-lg py-3 border-t border-slate-200">
-                    Mark all as read
-                  </Link>
+
+                  {/* hide make as read as long if  notification  count is empty */}           
+                  {notificationsCount > 0 &&
+
+                    <Link href={route("bell.notify")}  className="block w-full text-center text-sm font-medium text-blue-600 hover:bg-slate-100 rounded-b-lg py-3 border-t border-slate-200">
+                      Mark all as read
+                    </Link>
+                  }
+                  
                 </div>
             )}
       

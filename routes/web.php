@@ -67,6 +67,7 @@ Route::prefix("admin")->group(function(){
 
     // messages routes
     Route::get("message",[MessagesController::class,"showMassagesPage"])->name("page.messages");
+    Route::get("message-notify_id",[MessagesController::class,"updateSpecificNotification"]);
 
     // analytics routes
     Route::get("analytics",[AnalyticsController::class,"showAnalyticsPage"])->name("page.analytics");

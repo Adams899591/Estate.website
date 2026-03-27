@@ -66,7 +66,7 @@ const SidebarItem = ({pageLink, icon, text, active = false, isOpen, count }) => 
     <Link href={pageLink || '#'} className={`flex items-center px-4 py-3 rounded-lg transition-colors duration-200 group ${active ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}>
       <span className="text-xl group-hover:scale-110 transition-transform">{icon}</span>
       <span className={`ml-4 font-medium transition-all duration-300 ${!isOpen && 'hidden w-0 overflow-hidden'}`}>{text}</span>
-      {count && isOpen && (
+      {count > 0 && isOpen && (
         <span className="ml-auto bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">{count}</span>
       )}
     </Link>

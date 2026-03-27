@@ -44,12 +44,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
-        // 
+        //  this returns the total count of unread notifications
         inertia()->share("notificationsCount", function (){
             return Message::where("is_read", 0)->count();
         });
-
-
 
 
     }

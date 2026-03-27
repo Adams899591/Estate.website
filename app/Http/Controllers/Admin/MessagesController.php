@@ -26,4 +26,20 @@ class MessagesController extends Controller
 
         return Inertia::render("Admin/Messages", ["messages" => ShowMassagesPageResource::collection($messages)]);
     }
+
+  // This sets a specific Notification to read   
+  public function updateSpecificNotification(){
+
+     if (request("notifyId")) { // get the passed id 
+
+            $notify =  Message::FindOrFail(request("notifyId"));
+            
+            $notify->is_read = true;
+            $notify->save();
+
+           
+     }
+      return redirect()->back();
+
+  }
 }

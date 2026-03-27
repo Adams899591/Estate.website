@@ -6,10 +6,10 @@ const Messages = () => {
 
     const {messages, flash} = usePage().props;
 
-     console.log(messages);
+    //  console.log(messages);
 
-    // this function handles Message Search
-     function handlesMessageSearch(e) {
+    // this function handles Message Select Search
+     function handlesMessageSelectSearch(e) {
 
       const value = e.target.value; // this get the value selected
 
@@ -19,6 +19,12 @@ const Messages = () => {
                                        });
 
 
+     }
+
+    //   handle Update Notification
+     function handleUpdateNotification(notifyId) {
+
+        router.get("/admin/message-notify_id",{notifyId : notifyId})
      }
      
      
@@ -64,7 +70,7 @@ const Messages = () => {
           </span>
         </div>
         <div className="flex gap-3 w-full md:w-auto">
-          <select onChange={handlesMessageSearch} className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select onChange={handlesMessageSelectSearch} className="px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>All Messages</option>
             <option value={0}>Un Read</option>
             <option value={1}>Read</option>
@@ -116,7 +122,7 @@ const Messages = () => {
                    {/* map through this if message title is Team Update */}
                  {message.title == "Team Update" &&  
 
-                    <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4" >
+                    <div onClick={() => handleUpdateNotification(message.id)} className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4" >
                                       <div className="flex-shrink-0 pt-1">
                                           {/* Dynamic Status Icon */}
                                           {message.is_read == 1 ? (
@@ -148,7 +154,7 @@ const Messages = () => {
                   {/* map through this if message title is New Property Added */}
                   { message.title == "New Property Added" && 
 
-                      <div className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4" >
+                      <div onClick={() => handleUpdateNotification(message.id)} className="p-4 sm:p-6 hover:bg-slate-50 transition-colors cursor-pointer flex gap-4" >
                           <div className="flex-shrink-0 pt-1">
                               {/* Dynamic Status Icon */}
                               {message.is_read == 1 ? (
@@ -183,12 +189,6 @@ const Messages = () => {
           //  End data maping 
           ))} 
  
-
-
-    
-
-
-          
 
         </div>
 

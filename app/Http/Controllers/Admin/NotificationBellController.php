@@ -12,21 +12,22 @@ class NotificationBellController extends Controller
   // this set all UnRead  Notifcation As Read
   public function markAllNotifcationAsRead(){
      
-        $notifications =  Message::where("is_read", true)->get();
+        $notifications =  Message::where("is_read", false)->get();
 
         foreach($notifications as $notify){
-            $notify->is_read = false;
+            $notify->is_read = true;
             $notify->save();
         }
   
      return redirect()->route("page.messages")->with("success", "All notification marked as read");
   }
 
+  // this set Specific Notifcation to Read   
   public function updateSpecificNotifcation(){
 
      if (request("notifyId")) { // get the passed id 
 
-            $notify =  Message::where("id", request("notifyId"))->get();
+            $notify =  Message::FindOrFail(request("notifyId"));
             
             $notify->is_read = true;
             $notify->save();
