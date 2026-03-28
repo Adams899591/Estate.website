@@ -13,8 +13,19 @@ class PropertiesController extends Controller
      //show Properties Page
     public function showPropertiesPage(){
 
-         $properties = Property::all();
-         
-        return Inertia::render("DevLux/Properties", [ "properties" => PropertiesResource::collection($properties)]);
+
+       if (request("propertyType")) {
+             $properties =  Property::where("type", request("propertyType"))->inRandomOrder()->paginate(3);
+       }else if(request("propertyStatus")) {
+            $properties =  Property::where("status", request("propertyStatus"))->inRandomOrder()->paginate(3);
+       }else {
+           $properties = Property::inRandomOrder()->paginate(3);
+             
+       }
+
+       return Inertia::render("DevLux/Properties", [ "properties" => PropertiesResource::collection($properties)]);
+
+
+
     }
 }
