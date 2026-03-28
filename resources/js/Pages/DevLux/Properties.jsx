@@ -1,8 +1,11 @@
 import DevLuxGuestLayout from '@/Layouts/DevLux/DevLuxGuestLayout'
 import React from 'react'
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, router, usePage } from '@inertiajs/react'
 
 const Properties = () => {
+
+    const {properties} = usePage().props;
+
   return (
       <>
         <Head title="Our Properties" />
@@ -56,45 +59,55 @@ const Properties = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     
                     {/* Property Card 1 */}
-                    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
-                        <div className="relative h-64 overflow-hidden">
-                            {/* Placeholder Image */}
-                            <img 
-                                src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Modern Villa" 
-                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-                            />
-                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">
-                                For Sale
+                    {properties.data.map(property => (
+
+                        <div key={property.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
+                            
+                            <div className="relative h-64 overflow-hidden">
+                                {/* Placeholder Image */}
+                                <img 
+                                    src={property.image} 
+                                    alt={property.title} 
+                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
+                                />
+
+                                {/*  if condition that handles displaying status*/}
+                                {property.status == "For Sale" && <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">For Sale</div>}
+                                {property.status == "For Rent" && <div className="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">For Rent</div>}
+                                {property.status == "Sold" && <div className="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">Sold</div>}
+
+                                <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg font-bold px-3 py-1 rounded">
+                                    ${property.price}
+                                </div>
                             </div>
-                            <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg font-bold px-3 py-1 rounded">
-                                $1,250,000
+
+                            <div className="p-6">
+                                <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">Modern Luxury Villa</h3>
+                                <p className="text-gray-500 mb-4 flex items-center text-sm">
+                                    <span className="mr-1">📍</span> {property.title}
+                                </p>
+                                <div className="flex justify-between items-center text-gray-600 border-t pt-4 text-sm">
+                                    <span className="flex items-center gap-1"><strong>{property.bedrooms}</strong> Beds</span>
+                                    <span className="flex items-center gap-1"><strong>{property.bathrooms}</strong> Baths</span>
+                                    <span className="flex items-center gap-1"><strong>{property.area}</strong> Sq Ft</span>
+                                </div>
+                                <div className="mt-4 flex justify-end">
+                                    <Link href={route("page.viewProperty", {singlePropertyId : property.id})}  className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                            <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                                        </svg>
+                                        View
+                                    </Link>
+                                </div>
                             </div>
+
                         </div>
-                        <div className="p-6">
-                            <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">Modern Luxury Villa</h3>
-                            <p className="text-gray-500 mb-4 flex items-center text-sm">
-                                <span className="mr-1">📍</span> Beverly Hills, CA
-                            </p>
-                            <div className="flex justify-between items-center text-gray-600 border-t pt-4 text-sm">
-                                <span className="flex items-center gap-1"><strong>5</strong> Beds</span>
-                                <span className="flex items-center gap-1"><strong>4</strong> Baths</span>
-                                <span className="flex items-center gap-1"><strong>4,500</strong> Sq Ft</span>
-                            </div>
-                            <div className="mt-4 flex justify-end">
-                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                                    </svg>
-                                    View
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
+
+                    ))}
 
                     {/* Property Card 2 */}
-                    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
+                    {/* <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
                         <div className="relative h-64 overflow-hidden">
                             <img 
                                 src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
@@ -128,155 +141,9 @@ const Properties = () => {
                                 </Link>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    {/* Property Card 3 */}
-                    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
-                        <div className="relative h-64 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Cozy Cottage" 
-                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-                            />
-                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">
-                                For Sale
-                            </div>
-                            <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg font-bold px-3 py-1 rounded">
-                                $450,000
-                            </div>
-                        </div>
-                        <div className="p-6">
-                            <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">Cozy Family Cottage</h3>
-                            <p className="text-gray-500 mb-4 flex items-center text-sm">
-                                <span className="mr-1">📍</span> Austin, TX
-                            </p>
-                            <div className="flex justify-between items-center text-gray-600 border-t pt-4 text-sm">
-                                <span className="flex items-center gap-1"><strong>4</strong> Beds</span>
-                                <span className="flex items-center gap-1"><strong>3</strong> Baths</span>
-                                <span className="flex items-center gap-1"><strong>2,800</strong> Sq Ft</span>
-                            </div>
-                            <div className="mt-4 flex justify-end">
-                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                                    </svg>
-                                    View
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Property Card 4 */}
-                    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
-                        <div className="relative h-64 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Suburban Home" 
-                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-                            />
-                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">
-                                For Sale
-                            </div>
-                            <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg font-bold px-3 py-1 rounded">
-                                $850,000
-                            </div>
-                        </div>
-                        <div className="p-6">
-                            <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">Contemporary Home</h3>
-                            <p className="text-gray-500 mb-4 flex items-center text-sm">
-                                <span className="mr-1">📍</span> Seattle, WA
-                            </p>
-                            <div className="flex justify-between items-center text-gray-600 border-t pt-4 text-sm">
-                                <span className="flex items-center gap-1"><strong>4</strong> Beds</span>
-                                <span className="flex items-center gap-1"><strong>3</strong> Baths</span>
-                                <span className="flex items-center gap-1"><strong>3,200</strong> Sq Ft</span>
-                            </div>
-                            <div className="mt-4 flex justify-end">
-                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                                    </svg>
-                                    View
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Property Card 5 */}
-                    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
-                        <div className="relative h-64 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Executive Condo" 
-                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-                            />
-                            <div className="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">
-                                For Rent
-                            </div>
-                            <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg font-bold px-3 py-1 rounded">
-                                $2,800 / mo
-                            </div>
-                        </div>
-                        <div className="p-6">
-                            <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">Executive City Condo</h3>
-                            <p className="text-gray-500 mb-4 flex items-center text-sm">
-                                <span className="mr-1">📍</span> Chicago, IL
-                            </p>
-                            <div className="flex justify-between items-center text-gray-600 border-t pt-4 text-sm">
-                                <span className="flex items-center gap-1"><strong>2</strong> Beds</span>
-                                <span className="flex items-center gap-1"><strong>2</strong> Baths</span>
-                                <span className="flex items-center gap-1"><strong>1,500</strong> Sq Ft</span>
-                            </div>
-                            <div className="mt-4 flex justify-end">
-                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                                    </svg>
-                                    View
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Property Card 6 */}
-                    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
-                        <div className="relative h-64 overflow-hidden">
-                            <img 
-                                src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Beachfront Villa" 
-                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-                            />
-                            <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded uppercase">
-                                For Sale
-                            </div>
-                            <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg font-bold px-3 py-1 rounded">
-                                $2,100,000
-                            </div>
-                        </div>
-                        <div className="p-6">
-                            <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">Exclusive Beachfront Villa</h3>
-                            <p className="text-gray-500 mb-4 flex items-center text-sm">
-                                <span className="mr-1">📍</span> Miami, FL
-                            </p>
-                            <div className="flex justify-between items-center text-gray-600 border-t pt-4 text-sm">
-                                <span className="flex items-center gap-1"><strong>6</strong> Beds</span>
-                                <span className="flex items-center gap-1"><strong>5</strong> Baths</span>
-                                <span className="flex items-center gap-1"><strong>5,200</strong> Sq Ft</span>
-                            </div>
-                            <div className="mt-4 flex justify-end">
-                                <Link href="#" className="inline-flex items-center gap-1 bg-blue-600 text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                                    </svg>
-                                    View
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
+                
 
                 </div>
 

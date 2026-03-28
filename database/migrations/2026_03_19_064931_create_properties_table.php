@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('bathrooms'); 
             $table->integer('area'); // sqft
             $table->string('address');
-            $table->string('city');
+            $table->string('city'); 
             $table->string('state');
             $table->string('zipcode');
             $table->string('image')->nullable();

@@ -8,7 +8,12 @@ use App\Http\Controllers\Admin\NotificationBellController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DevLux\AboutUsController;
+use App\Http\Controllers\DevLux\ContactUsController;
 use App\Http\Controllers\DevLux\DevLuxPagesController;
+use App\Http\Controllers\DevLux\HomeController;
+use App\Http\Controllers\DevLux\PropertiesController as DevLuxPropertiesController;
+use App\Http\Controllers\DevLux\ViewPropertyController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,17 +34,22 @@ Route::controller(AuthController::class)->prefix("auth")->group(function(){
 
 
 
-// ================ ====================
-Route::controller(DevLuxPagesController::class)->prefix("DevLux")->group(function(){
+// ================  ====================
+Route::prefix("DevLux")->group(function(){
 
-  Route::get("home", "showHomePage")->name("page.home");
-  Route::get("properties", "showPropertiesPage")->name("page.properties");
-  Route::get("aboutUs", "showAboutUsPage")->name("page.aboutUs");
-  Route::get("contactUs", "showContactUsPage")->name("page.contactUs");
-  Route::get("viewProperty", "showViewPropretyPage")->name("page.viewProperty"); // id later
+  Route::get("home", [HomeController::class,"showHomePage"])->name("page.home");
+  Route::get("properties",  [DevLuxPropertiesController::class,"showPropertiesPage"])->name("page.properties");
+  Route::get("aboutUs", [AboutUsController::class, "showAboutUsPage"])->name("page.aboutUs");
+  Route::get("contactUs", [ContactUsController::class, "showContactUsPage"])->name("page.contactUs");
+  Route::get("viewProperty/{singlePropertyId}", [ViewPropertyController::class, "showViewPropretyPage"])->name("page.viewProperty"); // id later
 
 
 });
+
+
+
+
+
 
 
 

@@ -18,11 +18,11 @@ class MessageFactory extends Factory
     {
         return [
 
-            'name' => fake()->name(),
-            'email' => fake()->safeEmail(),
-            'subject' => fake()->sentence(3),
-            'message' => fake()->paragraph(),
-            'is_read' => fake()->boolean(30),
+            // // 'name' => fake()->name(),
+            // 'email' => fake()->safeEmail(),
+            // 'subject' => fake()->sentence(3),
+            // 'message' => fake()->paragraph(),
+            // 'is_read' => fake()->boolean(30),
 
         ];
     }

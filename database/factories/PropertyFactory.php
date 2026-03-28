@@ -18,6 +18,8 @@ class PropertyFactory extends Factory
      */
     public function definition(): array
     {
+        static $index = 0;
+
         // Data derived from your resources/js/properties.js
         $titles = [
             "Modern Luxury Villa",
@@ -35,12 +37,12 @@ class PropertyFactory extends Factory
         $types = [ "Apartment", "House", "Commercial"];
         $statuses = ["For Sale", 'Sold', "For Rent"];
         $images = [
-            "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1568605114967-8130f3a36f89?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-            "https://images.unsplash.com/photo-1600596542815-2495db9dc2c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+            "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
+            "https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -52,21 +54,25 @@ class PropertyFactory extends Factory
         $title = fake()->unique()->randomElement($titles) . ' in ' . fake()->city();
         $slug = Str::slug($title);
 
+        $image = $images[$index % count($images)];
+        $index++;
+
         return [
             'title' => $title,
             'slug' => $slug,
-            'description' => fake()->paragraphs(3, true),
+            'description' => fake()->paragraphs(1, true),
             'price' => fake()->numberBetween(550000, 2500000),
             'type' => fake()->randomElement($types),
             'status' => fake()->randomElement($statuses),
             'bedrooms' => fake()->numberBetween(0, 6),
             'bathrooms' => fake()->numberBetween(2, 5),
             'area' => fake()->numberBetween(1100, 5500),
+            // 'sqft' => fake()->numberBetween(800, 5000),
             'address' => fake()->streetAddress(),
             'city' => fake()->city(),
             'state' => fake()->stateAbbr(),
             'zipcode' => fake()->postcode(),
-            'image' => fake()->randomElement($images),
+            'image' => $image,
             'is_featured' => fake()->boolean(),
             'views' => fake()->numberBetween(450, 3200),
             'agent_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
