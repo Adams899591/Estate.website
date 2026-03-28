@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 
-// ================ ====================
+// ================ Route that handles Admin Authentication ====================
 Route::controller(AuthController::class)->prefix("auth")->group(function(){
 
      Route::get("adminLogin", "showloginPage")->name("login");
@@ -35,13 +35,15 @@ Route::controller(AuthController::class)->prefix("auth")->group(function(){
 
 
 
-// ================  ====================
+// ================ Route that handle DevLux Pages  ====================
 Route::prefix("DevLux")->group(function(){
 
   Route::get("home", [HomeController::class,"showHomePage"])->name("page.home");
   Route::get("properties",  [DevLuxPropertiesController::class,"showPropertiesPage"])->name("page.properties");
   Route::get("aboutUs", [AboutUsController::class, "showAboutUsPage"])->name("page.aboutUs");
   Route::get("contactUs", [ContactUsController::class, "showContactUsPage"])->name("page.contactUs");
+  Route::post("contactFormSubmission", [ContactUsController::class, "handleContactFormSubmission"])->name("contact.formSubmission");
+
   Route::get("viewProperty/{singlePropertyId}", [ViewPropertyController::class, "showViewPropretyPage"])->name("page.viewProperty"); // id later
   Route::get("paymentSuccess/{transactionId}/{amount}/{propertyName}", [PaymentSuccessController::class, "showPaymentSuccessPage"])->name("page.paymentSuccess");
 
@@ -54,7 +56,7 @@ Route::prefix("DevLux")->group(function(){
 
 
 
-// ================ ====================
+// ================ Route that handles Admins Pages ====================
 Route::prefix("admin")->group(function(){
 
     // dashboard routes

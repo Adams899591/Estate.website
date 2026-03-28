@@ -1,9 +1,34 @@
 import DevLuxGuestLayout from '@/Layouts/DevLux/DevLuxGuestLayout'
 import React from 'react'
-import { Head } from '@inertiajs/react'
+import { Head, router, useForm, usePage } from '@inertiajs/react'
 
 const ContactUs = () => {
-  return (
+       
+    const {flash} = usePage().props;
+
+
+    // Form state management using Inertia's useForm hook
+    const {data, setData, post, errors, reset} = useForm({
+        name: "",
+        email: "",
+        subject: "",
+        message:"",
+    })
+
+
+
+    // Handle form submission
+    function handleSubmit(e) {
+        e.preventDefault();
+        post(route("contact.formSubmission"), {
+            onSuccess: () => {
+                reset(); // reset all field after successfully submission 
+            }
+        });
+    }
+
+
+  return ( 
        <>
         <Head title="Contact Us" />
 
@@ -25,23 +50,46 @@ const ContactUs = () => {
                     {/* Contact Form */}
                     <div className="bg-gray-50 p-8 rounded-lg shadow-md">
                         <h2 className="text-2xl font-bold text-gray-800 mb-6">Send Us a Message</h2>
-                        <form>
+                       
+                        <form onSubmit={handleSubmit}>
+
+                            {/* show success message */}
+                            { flash.success && (
+                                <div className="bg-green-100 text-green-700 px-4 py-3 rounded mb-6">{flash.success}</div>
+                            ) }
+                            {/* show error message */}
+                            { flash.error && (
+                                <div className="bg-red-100 text-red-700 px-4 py-3 rounded mb-6">{flash.error}</div>
+                            ) }
+
+                            {/* name */}
                             <div className="mb-4">
                                 <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Full Name</label>
-                                <input type="text" id="name" name="name" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="John Doe" />
+                                <input type="text" value={data.name} onChange={e => setData("name", e.target.value)} id="name" name="name" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="John Doe" />
+                                {errors.name && <div className="text-red-500 text-xs mt-1">{errors.name}</div>}
                             </div>
+
+                            {/* email */}
                             <div className="mb-4">
                                 <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email Address</label>
-                                <input type="email" id="email" name="email" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="you@example.com" />
+                                <input type="email" value={data.email} onChange={e => setData("email", e.target.value)} id="email" name="email" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="you@example.com" />
+                                {errors.email && <div className="text-red-500 text-xs mt-1">{errors.email}</div>}
                             </div>
+
+                            {/* subject */}
                             <div className="mb-4">
                                 <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Subject</label>
-                                <input type="text" id="subject" name="subject" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Regarding Property #12345" />
+                                <input type="text" value={data.subject} onChange={e => setData("subject", e.target.value)} id="subject" name="subject" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Regarding Property #12345" />
+                                {errors.subject && <div className="text-red-500 text-xs mt-1">{errors.subject}</div>}
                             </div>
+
+                            {/* message */}
                             <div className="mb-4">
                                 <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
-                                <textarea id="message" name="message" rows="4" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Your message here..."></textarea>
+                                <textarea id="message" value={data.message} onChange={e => setData("message", e.target.value)} name="message" rows="4" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Your message here..."></textarea>
+                               {errors.message && <div className="text-red-500 text-xs mt-1">{errors.message}</div>}
                             </div>
+
                             <div>
                                 <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">
                                     Send Message
