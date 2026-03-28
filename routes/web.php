@@ -12,6 +12,7 @@ use App\Http\Controllers\DevLux\AboutUsController;
 use App\Http\Controllers\DevLux\ContactUsController;
 use App\Http\Controllers\DevLux\DevLuxPagesController;
 use App\Http\Controllers\DevLux\HomeController;
+use App\Http\Controllers\DevLux\PaymentSuccessController;
 use App\Http\Controllers\DevLux\PropertiesController as DevLuxPropertiesController;
 use App\Http\Controllers\DevLux\ViewPropertyController;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,7 @@ Route::prefix("DevLux")->group(function(){
   Route::get("aboutUs", [AboutUsController::class, "showAboutUsPage"])->name("page.aboutUs");
   Route::get("contactUs", [ContactUsController::class, "showContactUsPage"])->name("page.contactUs");
   Route::get("viewProperty/{singlePropertyId}", [ViewPropertyController::class, "showViewPropretyPage"])->name("page.viewProperty"); // id later
-
+  Route::get("paymentSuccess/{transactionId}/{amount}/{propertyName}", [PaymentSuccessController::class, "showPaymentSuccessPage"])->name("page.paymentSuccess");
 
 });
 

@@ -1,6 +1,7 @@
 import DevLuxGuestLayout from '@/Layouts/DevLux/DevLuxGuestLayout'
 import React from 'react'
 import { Head, Link, router, usePage } from '@inertiajs/react'
+import PayPalPayment from '@/Components/DevLux/PayPalPayment'
 
 const ViewProperty = () => {
 
@@ -21,7 +22,7 @@ const ViewProperty = () => {
                 
                 {/* Back Link */}
                 <div className="mb-4">
-                    <Link href={"page.home"} className="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
+                    <Link href={route("page.properties")} className="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
                         </svg>
@@ -86,22 +87,23 @@ const ViewProperty = () => {
                             </div>
 
                             {/* Purchase Section */}
-                            <div className="bg-gray-50 rounded-xl p-3 border border-gray-200 shadow-sm mt-2">
-                                <div className="flex items-end justify-between mb-3">
+                            <div className="bg-gray-50 rounded-xl p-2 border border-gray-200 shadow-sm mt-1">
+                                <div className="flex items-end justify-between mb-1">
                                     <div>
-                                        <p className="text-xs text-gray-500 mb-1">Listed Price</p>
-                                        <p className="text-xl font-bold text-blue-600">${Number(property.price).toLocaleString()}</p>
+                                        <p className="text-xs text-gray-500 mb-0">Listed Price</p>
+                                       {/* <p className="text-xl font-bold text-blue-600">${Number(property.price).toLocaleString()}</p> */}
+
+                                        <p className="text-xl font-bold text-blue-600">${property.price}</p>
                                     </div>
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <button className="w-full bg-blue-600 text-white font-bold py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors shadow-lg transform hover:-translate-y-0.5 flex justify-center items-center gap-2 text-xs">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                                            <path fillRule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clipRule="evenodd" />
-                                        </svg>
-                                        Purchase Now
-                                    </button>
-                                    <button onClick={handleDirectToContactUsPage} className="w-full bg-white text-gray-700 font-bold py-2 px-3 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors text-xs">
+                                <div className="flex flex-col gap-1">
+                                    {/* Replace the static button with our PayPal component */}
+                                    <PayPalPayment 
+                                        price={property.price} 
+                                        propertyName={property.title} 
+                                    />
+
+                                    <button onClick={handleDirectToContactUsPage} className="w-full bg-blue-600 text-white font-bold py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors text-xs shadow-md">
                                         Contact Agent
                                     </button >
                                 </div>
