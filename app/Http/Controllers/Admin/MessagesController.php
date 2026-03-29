@@ -14,7 +14,7 @@ class MessagesController extends Controller
     public function showMassagesPage(){
 
         // Start a query for the specific types of messages you want to show
-        $query = Message::whereIn("title", ["Team Update", "New Property Added"]);
+        $query = Message::whereIn("title", ["Team Update", "New Property Added", "System Notification"]);
 
         // Only filter by 'is_read' if the 'message' parameter is explicitly provided in the URL
         // We check request()->has() to prevent 'null == 0' evaluating to true on page load
@@ -22,7 +22,7 @@ class MessagesController extends Controller
             $query->where("is_read", request("message"));
         }
 
-        $messages = $query->latest()->paginate(1)->withQueryString();
+        $messages = $query->latest()->paginate(2)->withQueryString();
 
         return Inertia::render("Admin/Messages", ["messages" => ShowMassagesPageResource::collection($messages)]);
     }

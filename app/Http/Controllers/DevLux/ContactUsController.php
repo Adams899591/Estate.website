@@ -26,13 +26,25 @@ class ContactUsController extends Controller
             'message' => 'required|string|min:10'
         ]);
 
-        // Process the validated data (e.g., save to database, send email, etc.)
-        Mail::to("usmanadams551@gmail.com")->send(new ContactFormMail($user));
-        // ...
+        try {
+                // Process the validated data (e.g., save to database, send email, etc.)
+                Mail::to("usmanadams551@gmail.com")->send(new ContactFormMail($user));
+                // ...
+
+                // Redirect back with success message
+                return redirect()->back()->with('success', 'Your message has been sent successfully!');
+
+                
+        } catch (\Throwable $th) {
+            //throw $th;
+
+                // Redirect back with success message
+                return redirect()->back()->with('error', 'Message could not be sent. Please try again later');
+        }
 
 
-        // Redirect back with success message
-        return redirect()->back()->with('success', 'Your message has been sent successfully!');
+
+
     }
 
 }

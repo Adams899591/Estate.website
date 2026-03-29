@@ -39,7 +39,7 @@ const FeaturedProperties = ({properties}) => {
 
                 </div>
                 <div className="text-center mt-12">
-                    <Link href={"page.properties"} className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">View All Properties</Link>
+                    <Link href={route("page.properties")} className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">View All Properties</Link>
                 </div>
             </div>
         </section>

@@ -122,18 +122,33 @@ class PropertiesController extends Controller
 
     // handles Add Property
     public function addproperty(AddPropertyRequest $request){
+
        
         $data = $request->all(); // get all  request 
 
-         // image upload handling
-         if ($request->hasFile("image")) {
-            $image = $request->file("image");
-            $path = $image->store("properties", "public"); // store the image in the "properties" directory in the public disk
-            $data["image"] = $path; // add the image path to the request data so it can be saved in the database
-        }
+       // image upload handling
+        //  if ($request->hasFile("image")) {
+        //     $image = $request->file("image");
+        //     $path = $image->store("properties", "public"); // store the image in the "properties" directory in the public disk
+        //     $data["image"] = $path; // add the image path to the request data so it can be saved in the database
+       // }
+
         
          // we will create a new property and associate it with the currently authenticated user (agent)
-         $property = new Property($data);
+            $property  = new Property();
+            $property->title = $data["title"];
+            $property->description = $data["description"];
+            $property->price = $data["price"];
+            $property->type = $data["type"];
+            $property->status = $data["status"];
+            $property->bedrooms = $data["bedrooms"];
+            $property->bathrooms = $data["bathrooms"];
+            $property->area = $data["area"];
+            $property->city = $data["city"];
+            $property->address = $data["address"];
+            $property->state = $data["state"];
+            $property->zipcode = $data["zipcode"];
+            $property->image = $data["image"];
          
          $property->slug = Str::slug($request["title"]) . '-' . uniqid(); // generate a unique slug for the property
          $property->agent_id = Auth::id(); // associate the property with the currently authenticated user (agent)

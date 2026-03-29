@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('message');
             $table->string("summary");
             $table->boolean('is_read');
-            $table->integer("user_id");
+            $table->integer("user_id")->nullable();
             $table->string("receipt")->nullable();
             $table->timestamps();
         });

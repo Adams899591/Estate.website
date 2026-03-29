@@ -40,7 +40,7 @@ const PayPalPayment = ({ price, propertyName }) => {
           const order = await actions.order.capture();
           
           // This is the 'Transaction ID' you mentioned!
-          // console.log("Payment Successful. Transaction ID: " + order.id);
+          console.log("Payment Successful. Transaction ID: " + order.id);
           
           // redirect user to success page with transaction details (you can use Inertia or any method you prefer)
            router.get(`/DevLux/paymentSuccess/${order.id}/${price}/${propertyName}`);
