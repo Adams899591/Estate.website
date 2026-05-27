@@ -15,6 +15,7 @@ use App\Http\Controllers\DevLux\HomeController;
 use App\Http\Controllers\DevLux\PaymentSuccessController;
 use App\Http\Controllers\DevLux\PropertiesController as DevLuxPropertiesController;
 use App\Http\Controllers\DevLux\ViewPropertyController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -50,6 +51,12 @@ Route::prefix("DevLux")->group(function(){
 });
 
 
+Route::get('clear-cache', function() {
+    Artisan::call('optimize');
+    return "Caches optimized";
+});
+
+
 
 
 
@@ -57,7 +64,7 @@ Route::prefix("DevLux")->group(function(){
 
 
 // ================ Route that handles Admins Pages ====================
-Route::prefix("admin")->group(function(){
+Route::middleware("auth")->prefix("admin")->group(function(){
 
     // dashboard routes
     Route::get("dashboard",[DashboardController::class,"showDashboardPage"])->name("page.dashboard");

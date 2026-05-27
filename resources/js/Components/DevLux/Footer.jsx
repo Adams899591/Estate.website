@@ -7,7 +7,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* About Section */}
                     <div>
-                        <h3 className="text-xl font-bold text-white mb-4">DEVLUX ESTATES</h3>
+                        <Link href={route("login")}  className="text-xl font-bold text-white mb-4"><h3>DEVLUX ESTATES</h3></Link>
                         <p className="text-slate-400">Your partner in finding the perfect property. We are committed to excellence and customer satisfaction.</p>
                     </div>
                     {/* Quick Links */}

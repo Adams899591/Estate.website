@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Message;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -22,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+       // Force HTTPS in production environment
+        if (env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
+        }
 
         Vite::prefetch(concurrency: 3);
 
